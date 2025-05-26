@@ -1,0 +1,101 @@
+FILE SERVER
+TUJUAN: Melayani client dalam melakukan request file-server, termasuk mengambil, mengunggah, dan menghapus file.
+
+ATURAN PROTOKOL:
+- Client harus mengirimkan request dalam bentuk string.
+- Format string:  
+  REQUEST PARAMETER1 PARAMETER2 ...
+- Parameter dipisahkan oleh spasi.
+- Semua respon dikembalikan dalam format JSON dan diakhiri dengan karakter:
+  \r\n\r\n
+
+DAFTAR REQUEST YANG DILAYANI
+
+1. LIST
+TUJUAN: Mengambil daftar seluruh file yang tersedia.
+FORMAT:
+LIST
+RESPON:
+- BERHASIL:
+  {
+    "status": "OK",
+    "data": ["file1.txt", "file2.jpg", ...]
+  }
+- GAGAL:
+  {
+    "status": "ERROR",
+    "data": "pesan kesalahan"
+  }
+
+2. GET
+TUJUAN: Mengambil isi file tertentu (dalam base64).
+FORMAT:
+GET namafile
+RESPON:
+- BERHASIL:
+  {
+    "status": "OK",
+    "data_namafile": "namafile",
+    "data_file": "<isi file dalam base64>"
+  }
+- GAGAL:
+  {
+    "status": "ERROR",
+    "data": "pesan kesalahan"
+  }
+
+3. UPLOAD
+TUJUAN: Mengunggah file baru ke server.
+FORMAT:
+UPLOAD namafile isi_file_base64
+CATATAN: isi_file_base64 adalah isi file yang telah di-encode dengan Base64.
+RESPON:
+- BERHASIL:
+  {
+    "status": "OK",
+    "data": "namafile uploaded successfully"
+  }
+- GAGAL:
+  {
+    "status": "ERROR",
+    "data": "pesan kesalahan"
+  }
+
+4. DELETE
+TUJUAN: Menghapus file dari server.
+FORMAT:
+DELETE namafile
+RESPON:
+- BERHASIL:
+  {
+    "status": "OK",
+    "data": "namafile deleted successfully"
+  }
+- GAGAL:
+  {
+    "status": "ERROR",
+    "data": "pesan kesalahan"
+  }
+
+5. IMAGE
+TUJUAN: Mengambil daftar file gambar (.jpg, .jpeg, .png) yang tersedia.
+FORMAT:
+IMAGE
+RESPON:
+- BERHASIL:
+  {
+    "status": "OK",
+    "data": ["gambar1.jpg", "foto2.png", ...]
+  }
+- GAGAL:
+  {
+    "status": "ERROR",
+    "data": "pesan kesalahan"
+  }
+
+6. Request Tidak Dikenali
+RESPON:
+{
+  "status": "ERROR",
+  "data": "request tidak dikenali"
+}
